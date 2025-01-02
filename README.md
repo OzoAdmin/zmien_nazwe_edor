@@ -1,7 +1,7 @@
-# Skrypt do automatycznej zmiany nazw plików dla eDoręczeń
+# Program do automatycznej zmiany nazw plików dla eDoręczeń
 
-Ten skrypt służy do **automatycznego dostosowywania nazw plików** w taki sposób, aby spełniały wymogi systemu [eDoręczeń](https://www.gov.pl/web/cyfryzacja/edorzeczenia).  
-Dzięki temu nie musisz ręcznie usuwać polskich znaków, spacji itp. Skrypt sam wykona to zadanie za Ciebie, co jest szczególnie przydatne przy wysyłaniu wielu plików naraz.
+Ten program służy do **automatycznego dostosowywania nazw plików** w taki sposób, aby spełniały wymogi systemu [eDoręczeń](https://www.gov.pl/web/cyfryzacja/edorzeczenia).  
+Dzięki temu nie musisz ręcznie usuwać polskich znaków, spacji itp. Program sam wykona to zadanie za Ciebie, co jest szczególnie przydatne przy wysyłaniu wielu plików naraz.
 
 ## Funkcjonalności
 
@@ -10,20 +10,20 @@ Dzięki temu nie musisz ręcznie usuwać polskich znaków, spacji itp. Skrypt sa
 3. **Usuwanie niedozwolonych znaków** (np.: `: ~ " # % & * < > ? ! / { | }`).  
 4. **Kopiowanie** pliku do nowej nazwy (oryginał pozostaje nienaruszony).  
 
-Po wykonaniu skryptu nowy plik o poprawionej nazwie pojawi się w tym samym folderze co oryginał.
+Po wykonaniu programu nowy plik o poprawionej nazwie pojawi się w tym samym folderze co oryginał.
 
 ---
 
 ## Zawartość repozytorium
 
 - **`README.md`** – Ten plik z opisem.  
-- **`zmien_nazwe_edor.py`** – Główny skrypt w Pythonie.  
-  - Skrypt można uruchomić bezpośrednio (wymagany zainstalowany Python),  
+- **`zmien_nazwe_edor.py`** – Główny program w Pythonie.  
+  - Program można uruchomić bezpośrednio (wymagany zainstalowany Python),  
   - **lub** można go przekształcić w plik `.exe` (samodzielny, bez konieczności instalowania Pythona) za pomocą [PyInstaller](https://pyinstaller.org/).
 
 ---
 
-## Kod skryptu: `zmien_nazwe_edor.py`
+## Kod programu: `zmien_nazwe_edor.py`
 
 Poniższy kod możesz wkleić do pliku o nazwie `zmien_nazwe_edor.py`:
 
@@ -66,12 +66,12 @@ def clean_filename(original_name: str) -> str:
 
 def main():
     """
-    Skrypt kopiuje wskazane pliki do nowej nazwy akceptowanej przez eDoręczenia.
+    Program kopiuje wskazane pliki do nowej nazwy akceptowanej przez eDoręczenia.
     Nazwy plików przyjmuje z sys.argv[1:].
     """
     # Brak argumentów -> wyświetlamy komunikat
     if len(sys.argv) < 2:
-        print("Nie podano plików do przetworzenia. Przeciągnij je na skrypt lub podaj w CMD.")
+        print("Nie podano plików do przetworzenia. Przeciągnij je na program lub podaj w CMD.")
         input("Naciśnij Enter, aby zakończyć...")
         return
 
