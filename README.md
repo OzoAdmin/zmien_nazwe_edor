@@ -1,27 +1,15 @@
 # Program do automatycznej zmiany nazw plików dla eDoręczeń
 
 Ten program służy do **automatycznego dostosowywania nazw plików** w taki sposób, aby spełniały wymogi systemu [eDoręczeń](https://www.gov.pl/web/cyfryzacja/edorzeczenia).  
-Dzięki temu nie musisz ręcznie usuwać polskich znaków, spacji itp. Program sam wykona to zadanie za Ciebie, co jest szczególnie przydatne przy wysyłaniu wielu plików naraz.
+Dzięki temu nie musisz ręcznie usuwać niedozwolonych znaków, spacji itp. Program sam wykona to zadanie za Ciebie, co jest szczególnie przydatne przy wysyłaniu wielu plików naraz.
 
 ## Funkcjonalności
 
-1. **Usuwanie polskich znaków diakrytycznych** (ą, ć, ę, ł, ń, ó, ś, ź, ż).  
-2. **Zamiana spacji** na znak `+`.  
-3. **Usuwanie niedozwolonych znaków** (np.: `: ~ " # % & * < > ? ! / { | }`).  
-4. **Kopiowanie** pliku do nowej nazwy (oryginał pozostaje nienaruszony).  
+1. **Zamiana spacji** na znak `_`.  
+2. **Usuwanie niedozwolonych znaków** (np.: `: ~ " # % & * < > ? ! / { | }`).  
+3. **Kopiowanie** pliku do nowej nazwy (oryginał pozostaje nienaruszony).  
 
 Po wykonaniu programu nowy plik o poprawionej nazwie pojawi się w tym samym folderze co oryginał.
-
----
-
-# Program do automatycznej zmiany nazw plików
-
-Program wykonuje następujące operacje na nazwach plików:
-
-1. **Zamiana spacji** na podkreślnik `_`.
-2. **Usunięcie** wybranych niedozwolonych znaków (np.: `: ~ " # % & * < > ? ! / { | }`).
-
-Plik oryginalny pozostaje niezmieniony – program tworzy **kopię** o nowej nazwie w tym samym folderze.
 
 ---
 
