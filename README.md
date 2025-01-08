@@ -14,6 +14,17 @@ Po wykonaniu programu nowy plik o poprawionej nazwie pojawi się w tym samym fol
 
 ---
 
+# Program do automatycznej zmiany nazw plików
+
+Program wykonuje następujące operacje na nazwach plików:
+
+1. **Zamiana spacji** na podkreślnik `_`.
+2. **Usunięcie** wybranych niedozwolonych znaków (np.: `: ~ " # % & * < > ? ! / { | }`).
+
+Plik oryginalny pozostaje niezmieniony – program tworzy **kopię** o nowej nazwie w tym samym folderze.
+
+---
+
 ## Zawartość repozytorium
 
 - **`README.md`** – Ten plik z opisem.  
@@ -25,8 +36,6 @@ Po wykonaniu programu nowy plik o poprawionej nazwie pojawi się w tym samym fol
 
 ## Kod programu: `zmien_nazwe_edor.py`
 
-Poniższy kod możesz wkleić do pliku o nazwie `zmien_nazwe_edor.py`:
-
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -35,39 +44,27 @@ import sys
 import os
 import shutil
 
-def remove_polish_diacritics(text: str) -> str:
-    """
-    Usuwa polskie znaki diakrytyczne (małe i wielkie) z tekstu.
-    """
-    replacements = {
-        'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n',
-        'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z',
-        'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N',
-        'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
-    }
-    for pl_char, ascii_char in replacements.items():
-        text = text.replace(pl_char, ascii_char)
-    return text
-
 def clean_filename(original_name: str) -> str:
     """
-    1) Usuwa polskie diakrytyki
-    2) Zmienia spacje na plus '+'
-    3) Usuwa niedozwolone znaki: : ~ " # % & * < > ? ! / { | }
+    1) Zmienia spacje na podkreślnik '_'
+    2) Usuwa niedozwolone znaki: : ~ " # % & * < > ? ! / { | }
     """
-    name = remove_polish_diacritics(original_name)
-    # Zamiana spacji na +
-    name = name.replace(' ', '+')
-    # Usuwanie wybranych niedozwolonych znaków
+    name = original_name
+
+    # (1) Zamiana spacji na podkreślnik '_'
+    name = name.replace(' ', '_')
+
+    # (2) Usuwanie wybranych niedozwolonych znaków
     forbidden_chars = [':', '~', '"', '#', '%', '&', '*', '<', '>', '?', '!', '/', '{', '|', '}']
     for ch in forbidden_chars:
         name = name.replace(ch, '')
+
     return name
 
 def main():
     """
-    Program kopiuje wskazane pliki do nowej nazwy akceptowanej przez eDoręczenia.
-    Nazwy plików przyjmuje z sys.argv[1:].
+    Program kopiuje wskazane pliki do nowej nazwy, zamienia spacje na '_',
+    a także usuwa pewne niedozwolone znaki. Nazwy plików pobiera z sys.argv[1:].
     """
     # Brak argumentów -> wyświetlamy komunikat
     if len(sys.argv) < 2:
@@ -82,7 +79,7 @@ def main():
         
         print(f"\nPrzetwarzam plik: {file_path}")
 
-        # Rozbicie ścieżki na katalog, nazwę, rozszerzenie
+        # Rozbicie ścieżki na katalog, nazwę i rozszerzenie
         dir_name = os.path.dirname(file_path)
         base_name = os.path.splitext(os.path.basename(file_path))[0]
         extension = os.path.splitext(os.path.basename(file_path))[1]
@@ -97,14 +94,14 @@ def main():
         else:
             print(f"Nowa nazwa pliku: {new_filename}")
         
-        # Kopiowanie (zostawienie oryginału)
+        # Kopiowanie (zachowanie oryginału)
         try:
             shutil.copy2(file_path, new_path)
             print(f"Skopiowano do: {new_path}")
         except Exception as e:
             print(f"[BŁĄD] Nie udało się skopiować: {e}")
 
-    print("\nGotowe. Pliki zostały dostosowane do wymogów eDoręczeń.")
+    print("\nGotowe. Pliki zostały przetworzone.")
     input("Naciśnij Enter, aby zakończyć...")
 
 if __name__ == "__main__":
