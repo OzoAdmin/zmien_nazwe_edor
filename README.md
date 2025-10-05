@@ -1,111 +1,100 @@
-# Program do automatycznej zmiany nazw plików dla eDoręczeń
+# zmien_nazwe_edor
 
-Ten program służy do **automatycznego dostosowywania nazw plików** w taki sposób, aby spełniały wymogi systemu [eDoręczeń](https://www.gov.pl/web/e-doreczenia/).  
-Dzięki temu nie musisz ręcznie usuwać polskich znaków, spacji itp. Program sam wykona to zadanie za Ciebie, co jest szczególnie przydatne przy wysyłaniu wielu plików naraz.
+Skrypt Python do oczyszczania nazw plików z polskich znaków diakrytycznych i specjalnych charakterów.
 
-## Funkcjonalności
+## Opis
 
-1. **Usuwanie polskich znaków diakrytycznych** (ą, ć, ę, ł, ń, ó, ś, ź, ż).  
-2. **Zamiana spacji** na znak `+`.  
-3. **Usuwanie niedozwolonych znaków** (np.: `: ~ " # % & * < > ? ! / { | }`).  
-4. **Kopiowanie** pliku do nowej nazwy (oryginał pozostaje nienaruszony).  
+Program kopiuje pliki z oczyszczonymi nazwami, usuwając problematyczne znaki, które mogą powodować problemy w różnych systemach operacyjnych i aplikacjach. Oryginalny plik pozostaje nienaruszony - tworzona jest kopia z nową nazwą.
 
-Po wykonaniu programu nowy plik o poprawionej nazwie pojawi się w tym samym folderze co oryginał.
+## Funkcjonalność
 
----
+Skrypt wykonuje następujące operacje na nazwach plików:
 
-## Zawartość repozytorium
+1. **Usuwa polskie znaki diakrytyczne** - zamienia znaki takie jak ą, ć, ę, ł, ń, ó, ś, ź, ż na ich odpowiedniki ASCII (a, c, e, l, n, o, s, z, z)
+2. **Zamienia spacje na znaki plus (+)**
+3. **Usuwa problematyczne znaki specjalne**: `: ~ " # % & * < > ? ! / { | }`
 
-- **`README.md`** – Ten plik z opisem.  
-- **`zmien_nazwe_edor.py`** – Główny program w Pythonie.  
-  - Program można uruchomić bezpośrednio (wymagany zainstalowany Python),  
-  - **lub** można go przekształcić w plik `.exe` (samodzielny, bez konieczności instalowania Pythona) za pomocą [PyInstaller](https://pyinstaller.org/).
+## Użycie
 
----
+### Uruchomienie z linii poleceń
 
-## Kod programu: `zmien_nazwe_edor.py`
+```bash
+python zmien_nazwe_edor.py plik1.txt plik2.pdf "plik z polskimi znakami.doc"
+```
 
-Poniższy kod możesz wkleić do pliku o nazwie `zmien_nazwe_edor.py`:
+### Przeciąganie plików na skrypt
 
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+Możesz przeciągnąć pliki bezpośrednio na plik skryptu w Eksploratorze Windows.
 
-import sys
-import os
-import shutil
+### Przykład
 
-def remove_polish_diacritics(text: str) -> str:
-    """
-    Usuwa polskie znaki diakrytyczne (małe i wielkie) z tekstu.
-    """
-    replacements = {
-        'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n',
-        'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z',
-        'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N',
-        'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
-    }
-    for pl_char, ascii_char in replacements.items():
-        text = text.replace(pl_char, ascii_char)
-    return text
+**Plik wejściowy:** `Ważny dokument z ąćęłńóśźż!.pdf`  
+**Plik wyjściowy:** `Wazny+dokument+z+acelnoszz.pdf`
 
-def clean_filename(original_name: str) -> str:
-    """
-    1) Usuwa polskie diakrytyki
-    2) Zmienia spacje na plus '+'
-    3) Usuwa niedozwolone znaki: : ~ " # % & * < > ? ! / { | }
-    """
-    name = remove_polish_diacritics(original_name)
-    # Zamiana spacji na +
-    name = name.replace(' ', '+')
-    # Usuwanie wybranych niedozwolonych znaków
-    forbidden_chars = [':', '~', '"', '#', '%', '&', '*', '<', '>', '?', '!', '/', '{', '|', '}']
-    for ch in forbidden_chars:
-        name = name.replace(ch, '')
-    return name
+## Tworzenie pliku wykonywalnego (.exe)
 
-def main():
-    """
-    Program kopiuje wskazane pliki do nowej nazwy akceptowanej przez eDoręczenia.
-    Nazwy plików przyjmuje z sys.argv[1:].
-    """
-    # Brak argumentów -> wyświetlamy komunikat
-    if len(sys.argv) < 2:
-        print("Nie podano plików do przetworzenia. Przeciągnij je na program lub podaj w CMD.")
-        input("Naciśnij Enter, aby zakończyć...")
-        return
+Jeśli chcesz używać skryptu na komputerach bez zainstalowanego Pythona, możesz utworzyć plik wykonywalny (.exe) przy użyciu PyInstaller:
 
-    for file_path in sys.argv[1:]:
-        if not os.path.isfile(file_path):
-            print(f"\n[UWAGA] '{file_path}' nie jest plikiem lub nie istnieje.")
-            continue
-        
-        print(f"\nPrzetwarzam plik: {file_path}")
+```bash
+pip install pyinstaller
+pyinstaller --onefile zmien_nazwe_edor.py
+```
 
-        # Rozbicie ścieżki na katalog, nazwę, rozszerzenie
-        dir_name = os.path.dirname(file_path)
-        base_name = os.path.splitext(os.path.basename(file_path))[0]
-        extension = os.path.splitext(os.path.basename(file_path))[1]
+Po wykonaniu tej komendy, w folderze `dist` zostanie utworzony plik `zmien_nazwe_edor.exe`, który można uruchamiać na dowolnym komputerze z Windows bez konieczności instalacji Pythona.
 
-        # Oczyszczanie nazwy
-        new_base = clean_filename(base_name)
-        new_filename = new_base + extension
-        new_path = os.path.join(dir_name, new_filename)
+### Użycie pliku .exe
 
-        if new_path == file_path:
-            print(f"Nazwa po konwersji pozostaje bez zmian: {new_filename}")
-        else:
-            print(f"Nowa nazwa pliku: {new_filename}")
-        
-        # Kopiowanie (zostawienie oryginału)
-        try:
-            shutil.copy2(file_path, new_path)
-            print(f"Skopiowano do: {new_path}")
-        except Exception as e:
-            print(f"[BŁĄD] Nie udało się skopiować: {e}")
+```cmd
+zmien_nazwe_edor.exe plik1.txt plik2.pdf "plik z polskimi znakami.doc"
+```
 
-    print("\nGotowe. Pliki zostały dostosowane do wymogów eDoręczeń.")
-    input("Naciśnij Enter, aby zakończyć...")
+lub przeciągnięcie plików na `zmien_nazwe_edor.exe` w Eksploratorze Windows.
 
-if __name__ == "__main__":
-    main()
+## Wymagania
+
+### Dla skryptu Python
+- Python 3.x
+- Standardowe biblioteki Python (sys, os, shutil)
+
+### Dla pliku wykonywalnego (.exe)
+- Brak wymagań - działa na dowolnym systemie Windows
+
+## Funkcje
+
+### `remove_polish_diacritics(text: str) -> str`
+Usuwa polskie znaki diakrytyczne z podanego tekstu, obsługując zarówno małe jak i wielkie litery.
+
+### `clean_filename(original_name: str) -> str`
+Kompleksowo oczyszcza nazwę pliku:
+- Usuwa polskie diakrytyki
+- Zamienia spacje na znaki plus
+- Usuwa niedozwolone znaki specjalne
+
+### `main()`
+Główna funkcja programu, która:
+- Przetwarza argumenty wiersza poleceń
+- Sprawdza istnienie plików
+- Wykonuje kopię z oczyszczoną nazwą
+- Wyświetla informacje o postępie
+
+## Charakterystyka
+
+- **Bezpieczne operacje** - oryginalny plik pozostaje niezmieniony
+- **Wsparcie dla wielu plików** - można przetwarzać kilka plików jednocześnie
+- **Intuicyjny interfejs** - wyraźne komunikaty o statusie operacji
+- **Obsługa błędów** - informuje o problemach z kopiowaniem plików
+- **Przenośność** - możliwość utworzenia pliku wykonywalnego .exe
+
+## Autor
+
+**Michał Kowalski**  
+informatykbudzetowy.pl  
+michal@informatykbudzetowy.pl
+
+## Wersja
+
+0.0.2
+
+## Licencja
+
+Projekt udostępniony jako narzędzie pomocnicze dla administracji IT.
