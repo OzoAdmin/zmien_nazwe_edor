@@ -43,7 +43,7 @@ def main():
     print("=======================================================")
     print("Program: zmien_nazwe_edor")
     print("Autor: Michał Kowalski | informatykbudzetowy.pl | michal@informatykbudzetowy.pl")
-    print("Wersja: 0.0.1")
+    print("Wersja: 0.0.2")
     print("=======================================================")
     
     
@@ -88,3 +88,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
