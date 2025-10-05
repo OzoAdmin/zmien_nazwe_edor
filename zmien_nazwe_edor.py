@@ -38,6 +38,15 @@ def main():
     Skrypt kopiuje plik(i) do nowej nazwy z oczyszczoną nazwą.
     Nazwy plików przyjmuje z sys.argv[1:].
     """
+    
+    # Nagłówek programu
+    print("=======================================================")
+    print("Program: zmien_nazwe_edor")
+    print("Autor: Michał Kowalski | informatykbudzetowy.pl | michal@informatykbudzetowy.pl")
+    print("Wersja: 0.0.1")
+    print("=======================================================")
+    
+    
     # Jeśli nie podano żadnych plików:
     if len(sys.argv) < 2:
         print("Nie podano plików do przetworzenia (przeciągnij je na skrypt lub podaj w cmd).")
