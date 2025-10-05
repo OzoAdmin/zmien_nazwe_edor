@@ -1,6 +1,6 @@
 # Program do automatycznej zmiany nazw plików dla eDoręczeń
 
-Ten program służy do **automatycznego dostosowywania nazw plików** w taki sposób, aby spełniały wymogi systemu [eDoręczeń](https://www.gov.pl/web/cyfryzacja/edorzeczenia).  
+Ten program służy do **automatycznego dostosowywania nazw plików** w taki sposób, aby spełniały wymogi systemu [eDoręczeń](https://www.gov.pl/web/e-doreczenia/).  
 Dzięki temu nie musisz ręcznie usuwać polskich znaków, spacji itp. Program sam wykona to zadanie za Ciebie, co jest szczególnie przydatne przy wysyłaniu wielu plików naraz.
 
 ## Funkcjonalności
